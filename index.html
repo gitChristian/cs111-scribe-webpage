@@ -27,10 +27,8 @@
 	<body>
 		<div id="wrapper">
 
-		
-			
 			<!-- Header -->
-			<!--
+			<!-- We don' really need this
 				<section id="header" class="skel-layers-fixed">
 					<header>
 						<span class="image avatar"><img src="images/avatar.jpg" alt="" /></span>
@@ -57,8 +55,8 @@
 						<section id="one">
 							<div class="container">
 								<header class="major">
-									<h2>CS 111 Lecture 14</h2>
-									<h4>By Christian Nersesyan, David Antonio Garcia, Victoria Benard</h3>
+									<h2>File System Robustness: <br>CS111 Lecture 14</h2>
+									<h3>By Christian Nersesyan, David Antonio Garcia, Victoria Benard</h3>
 								</header>
 							</div>
 						</section>
@@ -66,13 +64,44 @@
 					<!-- Two -->
 						<section id="two">
 							<div class="container">
-								<h3>Things I Can Do</h3>
-								<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer lorem ipsum dolor sit amet.</p>
+							
+								<h3>Ways to evaluate a file system</h3>
+								<p>Say you are the product manager of an operating system. How do you go about choosing a file system for your OS?
+								How can you make sure the FS you choose is robust? We can test invariants. Invariants in this case are boolean expresssions
+								that should always be true for the FS.</p>
+								
+								<h4>Invariants for a  FS</h4>
+								<dl>
+									<dt> 1. Each block in FS in used for only one purpose </dt>
+									<dd>&emsp;&emsp; Ex. of purposes: superblock, free bitmap, inodes, etc. </dd>
+									
+									<dt>2. All reference blocks are initialized to data that are appropriate to that block.</dt>
+									<dd>&emsp;&emsp; Never leave data in an invalid state. For example, don't initialize an inode with a negative file size.</dd>
+									
+									<dt>3. All reference data blocks are marked used in the bitmap.</dt>
+									<dd></dd>
+									
+									<dt>4. All unreferenced data blocks are marked free in bitmap.</dt>
+									<dd></dd>
+								</dl>
+								<p>Let's refer to the above invariants as the rules of our FS.</p>
+								
+								<h4>Consequences of breaking these rules</h4>
+								<dl>
+									<dt>1. Disaster </dt><dd></dd>
+									<dt>2. Disaster</dt><dd></dd>
+									<dt>2. Disaster</dt><dd></dd>
+									<dt>4. We loose space in our FS (unused leak).</dt><dd></dd>
+								</dl>
+								<p>Rules 1-3 tend to have the highest prioty from developers since breaking these rules will corrupt the entire FS. 
+								Rule 4, although important, has less devastating effects.</p>
+								
+								
 								
 							</div>
 						</section>
 						
-					<!-- *** -->
+					<!-- Just add more of these sections -->
 						<section >
 							<div class="container">
 								<h3>Things I Can Do</h3>
@@ -119,7 +148,7 @@
 				<section id="footer">
 					<div class="container">
 						<ul class="copyright">
-							<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							<li>GNU General Public License</li>
 						</ul>
 					</div>
 				</section>

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <!--
 	Read Only by HTML5 UP
 	html5up.net | @n33co
@@ -79,7 +79,7 @@
 													<li><a href="#problem2">Renaming</a></li>													
 												</ol>
 											</li>
-											<li><a href="#schedule_robust">Interaction between Scheduling and Robustness</a>
+											<li><a href="#schedule_robust">Robustness Terminology and Theory</a>
 											<li><a href="#references">References</a></li>
 										</ol>
 								</div>
@@ -233,63 +233,93 @@
 								</dl>
 							</div>
 						</section>
-						
+                            						
 					<!-- Schedule and Robust -->
-						<div class="container">
-						<h3><a name="#schedule_robust"></a>Interaction between Scheduling and Robustness</h3>
-						<!--TODO: Please add here!-->
-						<dt>Add me</dt>
-						<dt>Add me</dt>
-						<dt>Add me</dt>
-						<dt>Add me</dt>
-						<dt>Add me</dt>
-						<dt>Add me</dt>
-						<dt>Add me</dt>
-				
-						<dd></dd><dd></dd><dd></dd>
-					
-					<!-- References-->
-						<section >
-							<div class="container">
-								<a name="references"></a><h3>References</h3>
-								<p>Fall 2014 Ryosuke Takeuchi scribe notes</p>
-								<p>http://linux.die.net/man/2/fsync</p>
-								
-							</div>
-						</section>
+                            <div class="container">
+                                <h3><a name="#schedule_robust"></a>Robustness Terminology and Theory</h3>
+                                <!--TODO: Please add here!-->
 
-					<!-- Three -->
-						<section id="three">
-							<div class="container">
-								<h3>A Few Accomplishments</h3>
-								<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer. Integer eu ante ornare amet commetus.</p>
-								<div class="features">
-									<article>
-										<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-										<div class="inner">
-											<h4>Possibly broke spacetime</h4>
-											<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-										</div>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-										<div class="inner">
-											<h4>Terraformed a small moon</h4>
-											<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-										</div>
-									</article>
-									<article>
-										<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-										<div class="inner">
-											<h4>Snapped dark matter in the wild</h4>
-											<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-										</div>
-									</article>
-								</div>
-							</div>
-						</section>
-						
-				</div>
+                               
+                                <article>
+                                    <article>
+                                        <dl>
+                                            <h4>3 main goal of a file system</h4>
+                                            <dt>&emsp;1. Durability</dt>
+                                            <dt>&emsp;&emsp; Survive failures in underlying hardware e.g losing power</dt>
+                                            <dt>&emsp;2. Atomicity</dt>
+                                            <dt>&emsp;&emsp; Changes either all made or not made at all</dt>
+                                            <dt>&emsp;3. Performance</dt>
+                                            <dt>&emsp;&emsp; Throughput and latency</dt>
+                                        </dl>
+                                    </article>
+                                    
+                                    <article>
+                                        <h4>Atomicity</h4>
+                                                <dt>How to implement atomicity atop a device where writes aren't atomic?</dt>
+                                                <dt>Golden Rule of Atomicity</dt>
+                                                <article>
+                                                <dt>&emsp; Never overwrite the last copy of your data (always have 2 copies available).  In order to </dt>
+                                                <dt>&emsp; write atomicity it ends up being that you actually need the last 3</dt>
+                                                </article>
+                                        <h4> Lampson-Sturges Assumptions</h4>
+                                                <dt>&emsp; 1. Storage wites may fail or may corrupt other blocks</dt>
+                                                <dt>&emsp; 2. A later read can detect the bad block.  Thus a computer can avoid reading a block with</dt>
+                                                <dt>&emsp; corrupted information.  This can help to avoid system crashes/glitches</dt>
+                                                <dt>&emsp; 3. Storage can spontaneously decay</dt>
+                                                <dt>&emsp; 4. Erros are rare (~Not everything is going to crash when all the storage spontaneously</dt>
+                                                <dt>&emsp; decays.  There are no (quick) fixes for this)</dt>
+                                    </article>
+                                        <h4>2 main methods to create a file system based off these assumptions</h4> 
+                                        <h5> Idea #1 Commit Record</h5>
+                                          <dt>The Commit record will be stored in the beginning.</dt>
+                                    </section>
+                                    </div>
+
+
+                                    <dd></dd><dd></dd><dd></dd>
+
+                                    <!-- References-->
+                                    <section>
+                                        <div class="container">
+                                            <a name="references"></a><h3>References</h3>
+                                            <p>Fall 2014 Ryosuke Takeuchi scribe notes</p>
+                                            <p>http://linux.die.net/man/2/fsync</p>
+
+                                        </div>
+                                    </section>
+
+                                    <!-- Three -->
+                                    <section id="three">
+                                        <div class="container">
+                                            <h3>A Few Accomplishments</h3>
+                                            <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer. Integer eu ante ornare amet commetus.</p>
+                                            <div class="features">
+                                                <article>
+                                                    <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+                                                    <div class="inner">
+                                                        <h4>Possibly broke spacetime</h4>
+                                                        <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+                                                    </div>
+                                                </article>
+                                                <article>
+                                                    <a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+                                                    <div class="inner">
+                                                        <h4>Terraformed a small moon</h4>
+                                                        <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+                                                    </div>
+                                                </article>
+                                                <article>
+                                                    <a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+                                                    <div class="inner">
+                                                        <h4>Snapped dark matter in the wild</h4>
+                                                        <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                            </div>
 				
 
 			<!-- Footer -->

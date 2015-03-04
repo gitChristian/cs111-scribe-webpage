@@ -48,23 +48,52 @@
 
 			-->
 
-			<!-- Main -->
-				<div id="main">
+			
 
-					<!-- One -->
+					<!-- Heading-->
 						<section id="one">
 							<div class="container">
 								<header class="major">
 									<h2>File System Robustness: <br>CS111 Lecture 14</h2>
-									<h3>By Christian Nersesyan, David Antonio Garcia, Victoria Bernard</h3>
+									<h4>By Christian Nersesyan, David Antonio Garcia, Victoria Bernard</h4>
 								</header>
 							</div>
 						</section>
-
+					<!-- Overview Navigation -->
+							<section id="overview">
+							<div class="container">
+								<h2>Overview</h2>
+										<ol id="toc">
+											<li><a href="#robustness_intro">Importance of Robustness</a></li>
+											<li><a href="#robustness_intro">Example Problem: Current GNU tar Exploit</a>
+												<ol>
+													<li><a href="#robustness_intro">tar in General</a></li>
+													<li><a href="#robustness_intro">Exploiting tar</a></li>
+													
+												</ol>
+											</li>
+										<!--	<li><a href="#thought_experiment">A Thought Experiment: Simple, Secure OS</a></li>
+											<li><a href="#bootstrapping">Bootstrapping</a>
+												<ol>
+													<li><a href="#bios">BIOS</a></li>
+													<li><a href="#chain_loading">Chain Loading</a></li>
+												</ol>
+											</li>
+											<li><a href="#return_to_the_thought_experiment">Returning to the Thought Experiment</a></li>
+											<li><a href="#programmed_io">Programmed I/O</a>
+												<ol>
+													<li><a href="#reading_ide_sectors">Reading IDE Sectors</a></li>
+													<li><a href="#main_program">Main Program</a></li>
+													<li><a href="#where_from_here">Where from Here?</a></li>
+												</ol>
+											</li> -->
+										</ol>
+								</div>
+						</section>
 					<!-- Two -->
 						<section id="two">
 							<div class="container">
-								<h3>Typical File System</h3>
+								<h3><a name="robustness_intro"></a>Typical File System</h3>
 								<h4>Berkley Fast File System (BSD)</h4>
 								<a href="#" class="image"><img src="images/BSD_diagram.jpg" alt="" /></a>
 								<h3>Ways to evaluate a file system</h3>
@@ -117,11 +146,13 @@
 									<dt> read (fd, buffer, s ); </dt><dd></dd>
 									<dt> Suppose fd is a regular file on the disk. What if  kernel locks at cache? then data would never be copied back to disk</dt><dd></dd>
 									<dt> Why do we care so much? </dt><dd></dd>
-									<dd>&emsp;&emsp; - write success notified to user was successful when maybe it wasn't, so now we have bad data that we don't know is bad</dt><dd></dd>
+									<dd>&emsp;&emsp; - write success notified to user was successful when maybe it wasn't. </dt><dd></dd>
 									<dd>&emsp;&emsp; - some side effects may not be saved due to out of order writes </dd>
-									<dd>&emsp;&emsp; - sdfsdfs </dd>
-									<dt> Other Sources of this problem</dt><dd></dd>
-									<dt> - .</dt>
+									<dd>&emsp;&emsp; -  </dd>
+									<dt> Sources of this problem</dt><dd></dd>
+									<dt> -  Power Loss </dt>
+									<dt> -  Disk crash </dt>
+									<dt> -  Suddend Disconnection </dt>
 									<dd>&emsp;&emsp; Never leave data in an invalid state. For example, don't initialize an inode with a negative file size.</dd>
 									
 									<dt>3. All reference data blocks are marked used in the bitmap.</dt>

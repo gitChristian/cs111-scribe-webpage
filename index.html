@@ -122,7 +122,7 @@
 										<div class="inner">
 											<h4>Possibly broke spacetime</h4>
 											<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-										</div>
+										</div>:
 									</article>
 									<article>
 										<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
@@ -142,6 +142,42 @@
 							</div>
 						</section>
 						
+						<section id="1">
+							<div class="container">
+								<h2>Robutness Terminology and Theory</h2>
+								<article>
+								<dl>
+								<h3>&emsp;3 main goal of a file system</h3>
+									<p>&emsp;&emsp;1. Durability</p>
+										<dt>&emsp;&emsp;&emsp; Survive failures in underlying hardware e.g losing power</dt>
+									<h4>&emsp;2. Atomicity</h4>
+										<dt>&emsp;&emsp;&emsp; Changes either all made or not made at all</dt>
+									<h4>&emsp;3. Performance</h4>
+										<dt>&emsp;&emsp;&emsp; Throughput and latency</dt>
+								</dl>
+								</article>
+							</div>
+						</section>
+						<section id ="2">
+							<div class="container">
+							<h2>Atomicity</h2>
+							<article>
+							<dl>
+							<p> How to implement atomicity atop a device where writes aren't atomic?</p>
+							<p> Golden Rule of Atomicity</p>
+							<dt> Never overwrite the last copy of your data (always have 2 copies available).  In order to write atomicity
+								 it ends up being that you actually need the last 3</dt>
+							<h2> Lampson-Sturges Assumptions</h2>
+							<p>1. Storage wites may fail or may corrupt other blocks</p>
+							<p>2. A later read can detect the bad block.  Thus a computer can avoid reading a block with corrupted informatio.
+									This can help to avoid system crashes/glitches</p>
+							<h2></h2>
+							<article>
+							<dl>
+							<</dl></article>
+							</dl>
+							</article>
+							</div>
 				</div>
 
 			<!-- Footer -->

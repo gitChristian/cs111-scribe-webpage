@@ -62,6 +62,8 @@
 					<!-- Overview Navigation -->
 							<section id="overview">
 							<div class="container">
+						<!--	<div class="features"> -->
+							  <article>
 								<h2>Overview</h2>
 										<ol id="toc">
 											<li><a href="#robustness_intro">Importance of Robustness</a></li>
@@ -90,6 +92,7 @@
 										</ol>
 								</div>
 						</section>
+						</article>
 					<!-- Two -->
 						<section id="two">
 							<div class="container">
@@ -140,9 +143,29 @@
 								<h3>Performance Issues</h3>
 								<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer lorem ipsum dolor sit amet.</p>
 								
-								<h4>Problem 1 </h4>
+								<h4>Problem 1 : Cache Coherence </h4>
 								<dl><!--- It would be cool if I could change the font below-->
-									<dt> write(fd, "hello", s );  </dt><dd></dd>
+									<dt><h5> <i>Definition:</i> cache unintentionally differs from memory </h5></dt><dd></dd>
+									<div style="font-family: Consolas; font-size: medium; ">
+									<dt> &emsp;&emsp;&emsp; write(fd, "hello", s );  </dt><dd></dd>
+									<dt> &emsp;&emsp;&emsp; read (fd, buffer, s ); </dt><dd></dd></div>
+									<dt> Most OS use a process called <i> dallying - </i>  certain tasks are prioritized over prior tasks</dt>
+									<dt> Suppose fd is a regular file on the disk. What if  kernel locks at cache? then data would never be copied back to disk</dt><dd></dd>							
+									<dt> Why do we care so much? </dt><dd></dd>
+									<dd>&emsp;&emsp; - cache may differ from disk causes invalid reads </dt><dd></dd>
+									<dd>&emsp;&emsp; - write success notified to user was successful when maybe it wasn't. </dt><dd></dd>
+									<dd>&emsp;&emsp; - some side effects may not be saved due to out of order writes </dd>
+									<dd>&emsp;&emsp; -  </dd>
+									<dt> Sources of this problem</dt><dd></dd>
+									<dt> -  Power Loss </dt>
+									<dt> -  Disk crash </dt>
+									<dt> -  Suddend Disconnection </dt>
+									
+								</dl>
+								<h5> Potential Solutions </h5>
+								<dl><!--- It would be cool if I could change the font below-->
+									<dt>1. Maintain a backup power supply in case of power loss to ensure cache always gets copied to disk.  </dt><dd></dd>
+									<dt> fsync  </dt><dd></dd>
 									<dt> read (fd, buffer, s ); </dt><dd></dd>
 									<dt> Suppose fd is a regular file on the disk. What if  kernel locks at cache? then data would never be copied back to disk</dt><dd></dd>
 									<dt> Why do we care so much? </dt><dd></dd>

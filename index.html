@@ -256,22 +256,54 @@
                                     <article>
                                         <h4>Atomicity</h4>
                                                 <dt>How to implement atomicity atop a device where writes aren't atomic?</dt>
-                                                <dt>Golden Rule of Atomicity</dt>
+                                                <h5>Golden Rule of Atomicity</h5>
                                                 <article>
-                                                <dt>&emsp; Never overwrite the last copy of your data (always have 2 copies available).  In order to </dt>
-                                                <dt>&emsp; write atomicity it ends up being that you actually need the last 3</dt>
+                                                <dt> Never overwrite the last copy of your data.  A drive often contains 2 copies of
+                                                    a file.  There is also a commit record to inform one on which copy to use.</dt>
+                                                <dt>Trying to Implement Atomicity with 2 commit records. </dt>
+                                                 <dt>&emsp;Ex:   2 Commit Logs </dt>
+                                                  <dt>&emsp;&emsp;Start up with the same content: </dt>
+                                                    <dt>&emsp;&emsp;A</dt>
+                                                    <dt>&emsp;&emsp;A</dt>
+                                                    <dt>&emsp;&emsp;Begin to write in commit 1:</dt>
+                                                    <dt>&emsp;&emsp;A ?</dt>
+                                                    <dt>&emsp;&emsp;A A</dt>
+                                                    <dt>&emsp;&emsp;Continue:</dt>
+                                                    <dt>&emsp;&emsp;Steps: 0 1 2 3 4 </dt>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp A ? B B B </dt>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp A A A ? B</dt>
+                                                    <dt>&emsp;&emsp;Issue:  If we were to loose power (reboot) in step 3 where one commit represents A </dt>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp and the other commit represents B then we will not know which file is</dt>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp garbage and which one is relevant.</dt>
+                                                    <dt>Solution:</dt>
+                                                    <dt>In order to correctly implement atomicity we need 3 copies of the commit record.  You should choose the file that the majority
+                                                    of these commits says is the newest.  In some cases you may actually have all 3 disagree (hence the need for 3 copies).
+                                                    This scenario could exist if the computer lost power when copying the value of the first commit to the second commit.
+                                                    The first commit copy could point to file A, the second commit copy would be unsure, and the third commit copy could point
+                                                    to file B.  In this case we would choose the first commit and thus file A.</dt>                                                   
+                                                    <dt>Ex:   3 Commit logs</dt>
+                                                      <dt>  &emsp; Steps: &nbsp    0 1 2 3 4 5 6   </dt>
+                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A ? B B B B B  </dt>
+                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A A A ? B B B  </dt>
+                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A A A A A ? B  </dt>
+                                                        <dt>&emsp; Fixed Issue:  We will always choose the majority and if they all disagree as in step 3, 
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp we choose the first one (Explained in more detail above in "Solution:").
+                                                    </dt>
                                                 </article>
                                         <h4> Lampson-Sturges Assumptions</h4>
-                                                <dt>&emsp; 1. Storage wites may fail or may corrupt other blocks</dt>
-                                                <dt>&emsp; 2. A later read can detect the bad block.  Thus a computer can avoid reading a block with</dt>
-                                                <dt>&emsp; corrupted information.  This can help to avoid system crashes/glitches</dt>
+                                                <dt>&emsp; 1. Storage writes may fail or may corrupt other blocks</dt>
+                                                <dt>&emsp; 2. A later read can detect the bad block.  Thus a computer can avoid reading a block</dt>
+                                                <dt>&emsp;&emsp;  with corrupted information.  This can help to avoid system crashes/glitches</dt>
                                                 <dt>&emsp; 3. Storage can spontaneously decay</dt>
-                                                <dt>&emsp; 4. Erros are rare (~Not everything is going to crash when all the storage spontaneously</dt>
-                                                <dt>&emsp; decays.  There are no (quick) fixes for this)</dt>
+                                                <dt>&emsp; 4. Erros are rare (~Not everything is going to crash and not all the storage will</dt>
+                                                    <dt>&emsp; &emsp;spontaneously decay at the same time.  There are no (quick) fixes for this)</dt>
                                     </article>
                                         <h4>2 main methods to create a file system based off these assumptions</h4> 
                                         <h5> Idea #1 Commit Record</h5>
-                                          <dt>The Commit record will be stored in the beginning.</dt>
+                                          <dt>&emsp; The Commit record will be stored in the beginning.</dt>
+                                        <h5> Idea #2 Journal</h5>
+                                           <dt> &emsp; a. You  make a log of all the planned changes.</dt>
+                                            <dt> &emsp; b. Than you make a commit record.</dt>
                                     </section>
                                     </div>
 

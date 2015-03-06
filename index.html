@@ -306,9 +306,11 @@
 												<li>Write "DONE" to commit record, meaning that the write is complete.</li>
 											</ol>
 											
-                                        <h5> Idea #2 Journal</h5>
-                                           <p> &emsp; a. You  make a log of all the planned changes.</p>
-                                            <p> &emsp; b. Than you make a commit record.</p>
+                                        <h5> Idea #2 Journal (Introduction)</h5>
+                                           <p> &emsp; A journal is separate file that tracks every change of the file system. Any change to the FS first gets logged
+										   to the journal. If power is lost while actually writing to to the FS in question, we can go back to the journal and restore 
+										   the file system. Journals are usually implemented as circular arrays. When the buffer gets close to getting full, the journal
+										   entries are commited to the FS and the old journal entries are rewritten with new ones.</p>
                                     
                             </div>
 

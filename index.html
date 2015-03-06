@@ -295,7 +295,17 @@
                                     </article>
                                         <h4>2 main methods to create a file system based off these assumptions</h4> 
                                         <h5> Idea #1 Commit Record</h5>
-                                          <p>&emsp; The Commit record will be stored in the beginning.</p>
+											<p>&emsp; We off course keep the golden rule of atomiticty in mind when implementing this method. Here are the 
+												steps involved when you issue a write command.</p>
+											<ol>
+												<li>Write the data to a temporary file (if we loose power at this stage, it is as if the write never happened).</li>
+												<li>Once all the data has been written to the temp file, atomically write "COMMIT" to the commit record. We
+													now have 2 copies of the data. The one in the temp file is the new data, and the other is the old data. If we loose
+													power after we wrote COMMIT, we can go back and see that we still need to copy the new data to the old.</li>
+												<li>Replace old data with new. If we loose power here, we start this step all over.</li>
+												<li>Write "DONE" to commit record, meaning that the write is complete.</li>
+											</ol>
+											
                                         <h5> Idea #2 Journal</h5>
                                            <p> &emsp; a. You  make a log of all the planned changes.</p>
                                             <p> &emsp; b. Than you make a commit record.</p>

@@ -60,41 +60,31 @@
 							</div>
 						</section>
 					<!-- Overview Navigation -->
-							<section id="overview">
+						<section id="overview">
 							<div class="container">
-						<!--	<div class="features"> -->
+						
 							  <article>
 								<h2>Overview</h2>
 										<ol id="toc">
-											<li><a href="#robustness_intro">Robustness in File Systems</a></li>
-											<ol>
-													<li><a href="#terms">Theory and Terminology</a></li>	
-													<li><a href="#invarients">Invariants for a  FS</a></li>		
-														
+											<li><a href="#robustness_intro">Robustness in File Systems</a>
+												<ol>
+													<li>Invariants for a  FS</li>		
+												
 												</ol>
+											</li>
 											<li><a href="#problems">Performance Issues</a>
 												<ol>
 													<li><a href="#problem1">Cache Coherence</a></li>
-													<!--	<ol><li> <a href="#problem1_sol">Potential Solution</a></li></ol> -->
 													<li><a href="#problem2">Renaming</a></li>													
 												</ol>
 											</li>
-											<li><a href="#schedule_robust">Robustness Terminology and Theory</a>
+											<li>Robustness Terminology and Theory</li>
 											<li><a href="#references">References</a></li>
 										</ol>
-								</div>
+								</article>
+							</div>
 						</section>
-						</article>
-						<!-- Antonio your work here -->
-						<div class="container">
-						<h3><a name="#terms"></a>Theory and Terminology</h3>
-						<dt>Antonio</dt>
-						<dt>Antonio</dt>
-						<dt>Antonio</dt>
-						<dt>Antonio</dt>
-						<dt>Antonio</dt>
-						<dt>Antonio</dt>
-						<dd></dd><dd></dd><dd></dd>
+						
 					<!-- Two -->
 						<section id="two">
 							<div class="container">
@@ -147,89 +137,88 @@
 								
 								<a name="problem1"></a><h4>Problem 1 : Cache Coherence </h4>
 								<dl><!--- It would be cool if I could change the font below-->
-									<dt><h5> <i>Definition:</i> cache unintentionally differs from memory </h5></dt><dd></dd>
-									<div style="font-family: Consolas; font-size: medium; ">
+									<dt><b><i>Definition:</i> cache unintentionally differs from memory </b></dt><dd></dd>
 									<dt> &emsp;&emsp;&emsp; write(fd, "hello", s );  </dt><dd></dd>
-									<dt> &emsp;&emsp;&emsp; read (fd, buffer, s ); </dt><dd></dd></div>
-									<dt> Most OS use a process called <i> dallying - </i>  certain tasks are prioritized over prior tasks</dt>
+									<dt> &emsp;&emsp;&emsp; read (fd, buffer, s ); </dt><dd></dd>
+									<dt> Most OS use a process called <i> dallying - </i>  certain tasks are prioritized over prior tasks</dt><dd></dd>	
 									<dt> Suppose fd is a regular file on the disk. What if  kernel locks at cache? then data would never be copied back to disk</dt><dd></dd>							
 									<dt> Why do we care so much? </dt><dd></dd>
-									<dd>&emsp;&emsp; - cache may differ from disk causes invalid reads </dt><dd></dd>
-									<dd>&emsp;&emsp; - write success notified to user was successful when maybe it wasn't. </dt><dd></dd>
+									<dd>&emsp;&emsp; - cache may differ from disk causes invalid reads </dd>
+									<dd>&emsp;&emsp; - write success notified to user was successful when maybe it wasn't. </dd>
 									<dd>&emsp;&emsp; - some side effects may not be saved due to out of order writes </dd>
 									<dd>&emsp;&emsp; -  </dd>
 									<dt> Sources of this problem</dt><dd></dd>
-									<dt> -  Power Loss </dt>
-									<dt> -  Disk crash </dt>
-									<dt> -  Suddend Disconnection </dt>
+									<dt> -  Power Loss </dt><dd></dd>	
+									<dt> -  Disk crash </dt><dd></dd>	
+									<dt> -  Suddend Disconnection </dt><dd></dd>	
 									
 								</dl>
 								<h5> Potential Solutions </h5>
 								<dl>
 									<dt>1. Maintain a backup power supply in case of power loss to ensure cache always gets copied to disk.  </dt><dd></dd>
 									<dt>2. Syncing functions </dt><dd></dd>
-									<div style="font-family: Consolas; font-size: medium; ">
-									<dt> &emsp;&emsp;&emsp; close(int fd) </div></dt>
+								
+									<dt> &emsp;&emsp;&emsp; close(int fd)</dt><dd></dd>
 									<dt>&emsp;&emsp;&emsp; closes the file referred to be fd so that fd will no longer be valid reference to that file</dt>
-									<dt>&emsp;&emsp;&emsp; <i> Note: does not "flush" data buffers so it is not guarenteed that prior writes to fd</dt> 
-									<dt>&emsp;&emsp;&emsp; were sucessful</dt>		</i>
-									<div style="font-family: Consolas; font-size: medium; ">
-									<dt> &emsp;&emsp;&emsp; fsync(int fd) </div></dt>
+									<dt>&emsp;&emsp;&emsp; <i> Note: does not "flush" data buffers so it is not guarenteed that prior writes to fd</i></dt> 
+									<dt>&emsp;&emsp;&emsp;<i>were sucessful</i></dt>
+									<dt> &emsp;&emsp;&emsp; fsync(int fd) </dt>
 									<dt>&emsp;&emsp;&emsp; "flushes" data by ensuring any cached data for the file specified by fd is copied to the disk device</dt>
 									<dt>&emsp;&emsp;&emsp; (or other permanent storage device); will do so for entire inode and data block</dt>
-									<div style="font-family: Consolas; font-size: medium; ">
-									<dt> &emsp;&emsp;&emsp; fdatasync(int fd) </div></dt>
+									<dt> &emsp;&emsp;&emsp; fdatasync(int fd) </dt>
 									<dt>&emsp;&emsp;&emsp; same as fsync but improves performance by not copying metadata, unless that metadata is </dt> 
 									<dt>&emsp;&emsp;&emsp; needed in order to allow a subsequent data retrieval to be correctly handled</dt>
-									<div style="font-family: Consolas; font-size: medium; ">
-									<dt> &emsp;&emsp;&emsp; sync(void) </div></dt>
+									
+									<dt> &emsp;&emsp;&emsp; sync(void) </dt>
 									<dt>&emsp;&emsp;&emsp; same as fsync but does so for every file in the cache; everything is written before sync call is</dt>
 									<dt>&emsp;&emsp;&emsp;saved</dt>
 									<dd></dd>						
-									<h5> Example </h5>
-									<div style="font-family: Consolas; font-size: medium; ">
+									
+									<dt><b> Example </b></dt><dd></dd>
 									<dt> &emsp;&emsp;if(fsync(fd) != 0) error(); </dt><dd></dd> 
 									<dt> &emsp;&emsp;if(write(fd , buf, 8192) != 8192)error(); </dt><dd></dd> 
-									<dt> &emsp;&emsp;if(fsync(fd) != 0) error(); </dt><dd></dd> </div><dd></dd>
+									<dt> &emsp;&emsp;if(fsync(fd) != 0) error(); </dt><dd></dd> <dd></dd>
 									<dt> Above code has to change all 20 data blocks and the inode data, slowing performance significantly </dt><dd></dd>
 									<dd></dd>
-									<div style="font-family: Consolas; font-size: medium; ">
+									
 									<dt> &emsp;&emsp;if(fsync(fd) != 0) error(); </dt><dd></dd> 
 									<dt> &emsp;&emsp;if(write(fd , buf, 8192) != 8192)error(); </dt><dd></dd> 
-									<dt> &emsp;&emsp;if(fdatasync(fd) != 0) error(); </dt><dd></dd> </div><dd></dd>
+									<dt> &emsp;&emsp;if(fdatasync(fd) != 0) error(); </dt><dd></dd> <dd></dd>
 									<dt> Now only the 8192/1024<i>(block size)</i> = 8 blocks have to be copied over</dt><dd></dd>
 								</dl>
-									
+							
+							
 							<a name="problem2"></a><h4>Problem 2 : Renaming </h4>
+								<img src="images/Rename_diagram.jpg" alt="" />
 								<dl><!--- It would be cool if I could change the font below-->
-									<dt><h5>  Consider the following situation</h5></dt><dd></dd>
-									<div style="font-family: Consolas; font-size: medium; ">
-									<dt> &emsp;&emsp;&emsp; rename("a","b");  </dt><dd></dd></div><dd></dd><dd></dd>
-									<a href="#" class="image"><img src="images/Rename_diagram.jpg" alt="" /></a>
-									<dt> &emsp;&emsp;&emsp; if rename fails and system crashes we cannot assume the file was not renames.</dt><dd></dd><dd></dd>
-									<dt><h5>Another situation</h5></dt><dd></dd>
-									<div style="font-family: Consolas; font-size: medium; ">
-									<dt> &emsp; rename("x/a","y/b");  </dt><dd></dd></div><dd></dd><dd></dd>
+									<dt><b>  Consider the following situation</b></dt><dd></dd>
 									
-									<dt>&emsp; Must follow steps: <i> </dt>
-									<dt> &emsp;&emsp; i. read inode</dt>
-									<dt> &emsp;&emsp; ii. read x's data</dt>
-									<dt> &emsp;&emsp; iii. read y's data</dt>
-									<dt> &emsp;&emsp; iv. write y's inode(<i>linkcount = 2</i>)</dt>
-									<dt> &emsp;&emsp; v. write x's new data</dt>
-									<dt> &emsp;&emsp; vi. change link count back to 1</dt></i>
-									<a href="#" class="image"><img src="images/Rename2_diagram.jpg" alt="" /></a>
-									<dt> &emsp; Does not preserve all invarients of file systems still because link count temporoary wrong</dt>
-									<dt> &emsp; However, this is acceptable because only consequence is if "b" gets deleted later link count will </dt>
-									<dt> &emsp; forever remain = 1 and forever unused. </dt>
+									<dt> &emsp;&emsp;&emsp; rename("a","b");  </dt><dd></dd><dd></dd><dd></dd>
+									<dt> &emsp;&emsp;&emsp; if rename fails and system crashes we cannot assume the file was not renames.</dt><dd></dd><dd></dd>
+									<dt><b>Another situation</b></dt><dd></dd>
+									
+									<dt> &emsp; rename("x/a","y/b");  </dt><dd></dd><dd></dd><dd></dd>
+									
+									<dt>&emsp; Must follow steps:  </dt><dd></dd>
+									<dt> &emsp;&emsp; <i>i. read inode</i></dt><dd></dd>
+									<dt> &emsp;&emsp;<i> ii. read x's data</i></dt><dd></dd>
+									<dt> &emsp;&emsp;<i> iii. read y's data</i></dt><dd></dd>
+									<dt> &emsp;&emsp;<i> iv. write y's inode</i>(<i>linkcount = 2</i>)</dt><dd></dd>
+									<dt> &emsp;&emsp;<i> v. write x's new data</i></dt><dd></dd>
+									<dt> &emsp;&emsp;<i> vi. change link count back to 1</i></dt><dd></dd>
+									
+									<dt> &emsp; Does not preserve all invarients of file systems still because link count temporoary wrong</dt><dd></dd>
+									<dt> &emsp; However, this is acceptable because only consequence is if "b" gets deleted later link count will </dt><dd></dd>
+									<dt> &emsp; forever remain = 1 and forever unused. </dt><dd></dd>
 															
 															
 								</dl>
+								<img src="images/Rename2_diagram.jpg" alt="" />
 								<h5> Potential Solutions </h5>
 								<dl>
-									<dt><div style="font-family: Consolas; font-size: medium; ">fsck </dt><div>
+									<dt>fsck </dt><dd></dd>
 									<dt>&emsp; program that will perform repairs on storage leaks; goes through and checkes inodes are in use and  
-									<dt>&emsp; link count is correct and updates bitmap <i>Note: if system crashes we shall assume fsck is idempotent. </i></dt>
+									&emsp; link count is correct and updates bitmap <i>Note: if system crashes we shall assume fsck is idempotent.</i> </dt><dd></dd>
 								</dl>
 							</div>
 						</section>
@@ -240,75 +229,78 @@
                                 <!--TODO: Please add here!-->
 
                                
-                                <article>
+                                
                                     <article>
                                         <dl>
-                                            <h4>3 main goal of a file system</h4>
-                                            <dt>&emsp;1. Durability</dt>
-                                            <dt>&emsp;&emsp; Survive failures in underlying hardware e.g losing power</dt>
-                                            <dt>&emsp;2. Atomicity</dt>
-                                            <dt>&emsp;&emsp; Changes either all made or not made at all</dt>
-                                            <dt>&emsp;3. Performance</dt>
-                                            <dt>&emsp;&emsp; Throughput and latency</dt>
+                                            <dt><b>3 main goal of a file system</b></dt><dd></dd>
+                                            <dt>&emsp;1. Durability</dt><dd></dd>
+                                            <dt>&emsp;&emsp; Survive failures in underlying hardware e.g losing power</dt><dd></dd>
+                                            <dt>&emsp;2. Atomicity</dt><dd></dd>
+                                            <dt>&emsp;&emsp; Changes either all made or not made at all</dt><dd></dd>
+                                            <dt>&emsp;3. Performance</dt><dd></dd>
+                                            <dt>&emsp;&emsp; Throughput and latency</dt><dd></dd>
                                         </dl>
                                     </article>
                                     
                                     <article>
                                         <h4>Atomicity</h4>
-                                                <dt>How to implement atomicity atop a device where writes aren't atomic?</dt>
-                                                <h5>Golden Rule of Atomicity</h5>
+											<dl>
+                                                <dt>How to implement atomicity atop a device where writes aren't atomic?</dt><dd></dd>
+                                                <dt><b>Golden Rule of Atomicity</b></dt><dd></dd>
+											</dl>
                                                 <article>
+												<dl>
                                                 <dt> Never overwrite the last copy of your data.  A drive often contains 2 copies of
-                                                    a file.  There is also a commit record to inform one on which copy to use.</dt>
-                                                <dt>Trying to Implement Atomicity with 2 commit records. </dt>
-                                                 <dt>&emsp;Ex:   2 Commit Logs </dt>
-                                                  <dt>&emsp;&emsp;Start up with the same content: </dt>
-                                                    <dt>&emsp;&emsp;A</dt>
-                                                    <dt>&emsp;&emsp;A</dt>
-                                                    <dt>&emsp;&emsp;Begin to write in commit 1:</dt>
-                                                    <dt>&emsp;&emsp;A ?</dt>
-                                                    <dt>&emsp;&emsp;A A</dt>
-                                                    <dt>&emsp;&emsp;Continue:</dt>
-                                                    <dt>&emsp;&emsp;Steps: 0 1 2 3 4 </dt>
-                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp A ? B B B </dt>
-                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp A A A ? B</dt>
-                                                    <dt>&emsp;&emsp;Issue:  If we were to loose power (reboot) in step 3 where one commit represents A </dt>
-                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp and the other commit represents B then we will not know which file is</dt>
-                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp &nbsp garbage and which one is relevant.</dt>
-                                                    <dt>Solution:</dt>
+                                                    a file.  There is also a commit record to inform one on which copy to use.</dt><dd></dd>
+                                                <dt>Trying to Implement Atomicity with 2 commit records. </dt><dd></dd>
+                                                 <dt>&emsp;Ex:   2 Commit Logs </dt><dd></dd>
+                                                  <dt>&emsp;&emsp;Start up with the same content: </dt><dd></dd>
+                                                    <dt>&emsp;&emsp;A</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;A</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;Begin to write in commit 1:</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;A ?</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;A A</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;Continue:</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;Steps: 0 1 2 3 4 </dt><dd></dd>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp; &nbsp; A ? B B B </dt><dd></dd>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp; &nbsp; A A A ? B</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;Issue:  If we were to loose power (reboot) in step 3 where one commit represents A </dt><dd></dd>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp; &nbsp; and the other commit represents B then we will not know which file is</dt><dd></dd>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&nbsp; &nbsp; garbage and which one is relevant.</dt><dd></dd>
+                                                    <dt>Solution:</dt><dd></dd>
                                                     <dt>In order to correctly implement atomicity we need 3 copies of the commit record.  You should choose the file that the majority
                                                     of these commits says is the newest.  In some cases you may actually have all 3 disagree (hence the need for 3 copies).
                                                     This scenario could exist if the computer lost power when copying the value of the first commit to the second commit.
                                                     The first commit copy could point to file A, the second commit copy would be unsure, and the third commit copy could point
-                                                    to file B.  In this case we would choose the first commit and thus file A.</dt>                                                   
-                                                    <dt>Ex:   3 Commit logs</dt>
-                                                      <dt>  &emsp; Steps: &nbsp    0 1 2 3 4 5 6   </dt>
-                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A ? B B B B B  </dt>
-                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A A A ? B B B  </dt>
-                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A A A A A ? B  </dt>
-                                                        <dt>&emsp; Fixed Issue:  We will always choose the majority and if they all disagree as in step 3, 
-                                                    <dt>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp we choose the first one (Explained in more detail above in "Solution:").
-                                                    </dt>
+                                                    to file B.  In this case we would choose the first commit and thus file A.</dt><dd></dd>                                                   
+                                                    <dt>Ex:   3 Commit logs</dt><dd></dd>
+                                                      <dt>  &emsp; &nbsp; Steps:   0 1 2 3 4 5 6   </dt><dd></dd>
+                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A ? B B B B B  </dt><dd></dd>
+                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A A A ? B B B  </dt><dd></dd>
+                                                      <dt>  &emsp;&emsp;&emsp;&emsp;         A A A A A ? B  </dt><dd></dd>
+                                                        <dt>&emsp; Fixed Issue:  We will always choose the majority and if they all disagree as in step 3, </dt><dd></dd>
+                                                    <dt>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; we choose the first one (Explained in more detail above in "Solution:").
+                                                    </dt><dd></dd>
+													</dl>
                                                 </article>
                                         <h4> Lampson-Sturges Assumptions</h4>
-                                                <dt>&emsp; 1. Storage writes may fail or may corrupt other blocks</dt>
-                                                <dt>&emsp; 2. A later read can detect the bad block.  Thus a computer can avoid reading a block</dt>
-                                                <dt>&emsp;&emsp;  with corrupted information.  This can help to avoid system crashes/glitches</dt>
-                                                <dt>&emsp; 3. Storage can spontaneously decay</dt>
-                                                <dt>&emsp; 4. Erros are rare (~Not everything is going to crash and not all the storage will</dt>
-                                                    <dt>&emsp; &emsp;spontaneously decay at the same time.  There are no (quick) fixes for this)</dt>
+											<dl>
+                                                <dt>&emsp; 1. Storage writes may fail or may corrupt other blocks</dt><dd></dd>
+                                                <dt>&emsp; 2. A later read can detect the bad block.  Thus a computer can avoid reading a block</dt><dd></dd>
+                                                <dt>&emsp;&emsp;  with corrupted information.  This can help to avoid system crashes/glitches</dt><dd></dd>
+                                                <dt>&emsp; 3. Storage can spontaneously decay</dt><dd></dd>
+                                                <dt>&emsp; 4. Erros are rare (~Not everything is going to crash and not all the storage will</dt><dd></dd>
+                                                <dt>&emsp; &emsp;spontaneously decay at the same time.  There are no (quick) fixes for this)</dt><dd></dd>
+											</dl>
                                     </article>
                                         <h4>2 main methods to create a file system based off these assumptions</h4> 
                                         <h5> Idea #1 Commit Record</h5>
-                                          <dt>&emsp; The Commit record will be stored in the beginning.</dt>
+                                          <p>&emsp; The Commit record will be stored in the beginning.</p>
                                         <h5> Idea #2 Journal</h5>
-                                           <dt> &emsp; a. You  make a log of all the planned changes.</dt>
-                                            <dt> &emsp; b. Than you make a commit record.</dt>
-                                    </section>
-                                    </div>
-
-
-                                    <dd></dd><dd></dd><dd></dd>
+                                           <p> &emsp; a. You  make a log of all the planned changes.</p>
+                                            <p> &emsp; b. Than you make a commit record.</p>
+                                    
+                            </div>
 
                                     <!-- References-->
                                     <section>
@@ -319,40 +311,6 @@
 
                                         </div>
                                     </section>
-
-                                    <!-- Three -->
-                                    <section id="three">
-                                        <div class="container">
-                                            <h3>A Few Accomplishments</h3>
-                                            <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer. Integer eu ante ornare amet commetus.</p>
-                                            <div class="features">
-                                                <article>
-                                                    <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-                                                    <div class="inner">
-                                                        <h4>Possibly broke spacetime</h4>
-                                                        <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-                                                    </div>
-                                                </article>
-                                                <article>
-                                                    <a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-                                                    <div class="inner">
-                                                        <h4>Terraformed a small moon</h4>
-                                                        <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-                                                    </div>
-                                                </article>
-                                                <article>
-                                                    <a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-                                                    <div class="inner">
-                                                        <h4>Snapped dark matter in the wild</h4>
-                                                        <p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                            </div>
-				
 
 			<!-- Footer -->
 				<section id="footer">
